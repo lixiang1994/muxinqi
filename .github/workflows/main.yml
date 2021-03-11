@@ -1,0 +1,92 @@
+name: 🙋‍♂️ Personal Metrics
+on:
+  # Schedule updates
+  schedule: [{cron: "0 * * * *"}]
+  # Lines below let you run workflow manually and on each commit
+  push: 
+    branches: "main"
+  workflow_dispatch:
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: 🚀 Personal Metrics
+        uses: lowlighter/metrics@master
+        with:
+          filename: metrics.svg
+          config_timezone: Asia/Shanghai
+          config_padding: 6%, 10% # 6% width padding, 10% height padding
+          token: ${{ secrets.METRICS_TOKEN }}
+          committer_token: ${{ secrets.GITHUB_TOKEN }}
+          base: header, repositories
+          plugin_lines: yes
+          plugin_isocalendar: yes
+          config_order: base.header, isocalendar, base.repositories
+          
+      - name: 🖥 PageSpeed Insights
+        uses: lowlighter/metrics@master
+        with:
+          filename: metrics.pagespeed.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          committer_token: ${{ secrets.GITHUB_TOKEN }}
+          base: ""
+          plugin_pagespeed: yes
+          plugin_pagespeed_token: ${{ secrets.PAGESPEED_TOKEN }}   # Optional but recommended
+          plugin_pagespeed_detailed: yes                           # Print detailed audit metrics
+          plugin_pagespeed_screenshot: yes                         # Display a screenshot of your website
+          plugin_pagespeed_url: muxinqi.com                        # Website to audit (defaults to your GitHub linked website)
+          
+      - name: 🔨 Most used languages
+        uses: lowlighter/metrics@master
+        with:
+          filename: metrics.languages.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          committer_token: ${{ secrets.GITHUB_TOKEN }}
+          base: ""
+          plugin_languages: yes
+          plugin_languages_ignored: html, css                            # List of languages to ignore
+          # plugin_languages_skipped: my-test-repo                       # List of repositories to skip
+          # plugin_languages_colors: "0:orange, javascript:#ff0000, ..." # Make most used languages orange and JavaScript red
+          plugin_languages_details: bytes-size, percentage               # Additionally display total bytes size and percentage
+          plugin_languages_threshold: 2%                                 # Hides all languages less than 2%
+        
+      - name: ⏰ WakaTime
+        uses: lowlighter/metrics@master
+        with: 
+          filename: metrics.wakatime.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          committer_token: ${{ secrets.GITHUB_TOKEN }}
+          base: ""
+          plugin_wakatime: yes
+          plugin_wakatime_token: ${{ secrets.WAKATIME_TOKEN }}                  # Required
+          plugin_wakatime_days: 7                                               # Display last week stats
+          plugin_wakatime_sections: time, languages, editors, os # Display time and projects sections, along with projects graphs
+          plugin_wakatime_limit: 4                                              # Show 4 entries per graph
+      
+      - name: ⭐️ Starred topics
+        uses: lowlighter/metrics@master
+        with: 
+          filename: metrics.star-topics.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          committer_token: ${{ secrets.GITHUB_TOKEN }}
+          base: ""
+          plugin_topics: yes
+          plugin_topics_sort: stars    # Sort by most starred topics
+          plugin_topics_mode: mastered # Display icons instead of labels
+          plugin_topics_limit: 15       # Disable limitations
+      
+      - name: 🔧 Get current year
+        id: date
+        run: echo "::set-output name=year::$(date +%Y)"
+        
+      - name: 🌇 GitHub Skyline 3D calendar
+        uses: lowlighter/metrics@master
+        with: 
+          filename: metrics.skyline.svg
+          token: NOT_NEEDED
+          base: ""
+          plugin_skyline: yes
+          plugin_skyline_year: ${{ steps.date.outputs.year }} # Set to 0 to display current year
+          plugin_skyline_frames: 60                           # Use 60 frames (half-loop)
+          plugin_skyline_quality: 1                           # Scale-down quality by half to reduce file-size (⚠️ higher quality increase file size)

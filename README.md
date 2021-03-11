@@ -1,0 +1,6 @@
+[![🙋‍♂️ Personal Metrics](https://github.com/muxinqi/muxinqi/blob/main/metrics.svg)](https://github.com/muxinqi)
+[![🚀 Page Speed Insights of muxinqi.com](https://github.com/muxinqi/muxinqi/blob/main/metrics.pagespeed.svg)](https://muxinqi.com)
+![🔨 Most used languages](https://github.com/muxinqi/muxinqi/blob/main/metrics.languages.svg)
+![⏰ WakaTime Stats](https://github.com/muxinqi/muxinqi/blob/main/metrics.wakatime.svg)
+![⭐️ Starred topics](https://github.com/muxinqi/muxinqi/blob/main/metrics.star-topics.svg)
+[![🌇 GitHub Skyline 3D calendar](https://github.com/muxinqi/muxinqi/blob/main/metrics.skyline.svg)](https://skyline.github.com/muxinqi/2021)
